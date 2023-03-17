@@ -4,13 +4,13 @@ class StudentInfo(models.Model):
 
     pinno = models.CharField( max_length=13)
     name = models.CharField( max_length=50)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=50,default=" ")
     class Meta:
         verbose_name = ("studentinfo")
         verbose_name_plural = ("studentinfos")
 
     def __str__(self):
-        return self.name
+        return self.pinno
 
     def get_absolute_url(self):
         return reverse("studentinfo_detail", kwargs={"pk": self.pk})
