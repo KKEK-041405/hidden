@@ -17,6 +17,10 @@ class DetailsPage(LoginRequiredMixin,TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["Name"] = self.request.user.get_username()
+        self.request.user.groups.add(1)
+        if not self.request.user.is_anonymous:
+            print(self.request.user.groups)
+            print(self.request.user.get_username())
         return context
     
 
