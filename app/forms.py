@@ -6,5 +6,7 @@ class StudentDetaislForm(forms.ModelForm):
         model = StudentInfo
         fields = "__all__"
         
+class GetStudentDetails(forms.Form):
+    csvfile = forms.FileField()
     """StudentDetaislForm definition."""
 

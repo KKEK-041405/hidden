@@ -15,4 +15,6 @@ class StudentInfo(models.Model):
     def get_absolute_url(self):
         return reverse("studentinfo_detail", kwargs={"pk": self.pk})
 
+class Document(models.Model):
+    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 # Create your models here.
