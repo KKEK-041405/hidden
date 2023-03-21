@@ -23,12 +23,22 @@ class DetailsPage(LoginRequiredMixin,TemplateView):
         #print(self.request.user.get_username())
         return context
     
+class UpdateDetails(TemplateView,FormView):
+    def __init__(self, *args):
+        super(UpdateDetails, self).__init__(*args)
+    template_name = "UpdateDetails.html"
+    form_class = StudentDetaislForm
+        
+    
 class UploadDetails(FormView):
     template_name = "upload.html"
     form_class = GetStudentDetails
+    success_url = "/details"
     def  form_valid(self, form):
-        newdoc = Document(self.request.FILES["docfile"])
+        newdoc = Document(docfile = self.request.FILES.get("csvfile"))
         newdoc.save()
+        return super().form_valid(self)
+    
         
 class IndexPage(TemplateView):
     template_name = "home.html"
