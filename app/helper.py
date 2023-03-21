@@ -4,7 +4,7 @@ def CreateUser(Cleaned_data):
             newUser = User(username=Cleaned_data["pinno"],is_superuser=False)
             newUser.set_password(Cleaned_data["password"])
             newUser.save()
-            AddtoGroup("Students",newUser)
+            AddtoGroup("students",newUser)
             return True
         return False
         
@@ -15,6 +15,6 @@ def CheckUserExistence(Username):
 
 def AddtoGroup(groupname,user):
     studentgroup = Group.objects.get(name=groupname)
-    studentgroup.user_set.add(newUser)
+    studentgroup.user_set.add(user)
 
     
