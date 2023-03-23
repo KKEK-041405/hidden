@@ -2,9 +2,9 @@ from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView,FormView
 from django.contrib.auth.models import User,Group
-from .forms import StudentDetaislForm,GetStudentDetails
+from .forms import StudentDetaislForm,GetStudentDetails,UpdateStdDetails
 from django.contrib.auth import authenticate, login,logout
-from .helper import CreateUser
+from .helper import CreateUser,convert
 from .models import Document
 #login view
 class LoginPage(LoginView):
@@ -14,6 +14,7 @@ class LoginPage(LoginView):
         context = super(LoginPage, self).get_context_data(**kwargs)
         context["succes_url"] = self.request.GET.get(next) or self.success_url
         return context
+
     
 class DetailsPage(LoginRequiredMixin,TemplateView):
     template_name = "details.html"
@@ -27,7 +28,7 @@ class UpdateDetails(TemplateView,FormView):
     def __init__(self, *args):
         super(UpdateDetails, self).__init__(*args)
     template_name = "UpdateDetails.html"
-    form_class = StudentDetaislForm
+    form_class = UpdateStdDetails
         
     
 class UploadDetails(FormView):
@@ -37,6 +38,7 @@ class UploadDetails(FormView):
     def  form_valid(self, form):
         newdoc = Document(docfile = self.request.FILES.get("csvfile"))
         newdoc.save()
+        convert()
         return super().form_valid(self)
     
         
